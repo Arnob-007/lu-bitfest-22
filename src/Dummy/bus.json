@@ -2,156 +2,156 @@
     "buses":
     [
         {
-            "id": "1",
+            "id": 1,
             "license": "432sdf5",
             "code": "SP1",
-            "cap": "60",
+            "cap": 60,
             "driver":{
                 "name": "Adam",
-                "contact": "1234567891"
+                "contact": 1234567891
             },
             "isActive": "true"
         },
         {
-            "id": "2",
+            "id": 2,
             "license": "2343b5",
             "code": "AP1",
-            "cap": "60",
+            "cap": 60,
             "driver":{
                 "name": "John",
-                "contact": "1234567892"
+                "contact": 1234567892
             },
             "isActive": "true"
         },
         {
-            "id": "3",
+            "id": 3,
             "license": "jasdbf7",
             "code": "CM1",
-            "cap": "60",
+            "cap": 60,
             "driver":{
                 "name": "Doe",
-                "contact": "1234567893"
+                "contact": 1234567893
             },
             "isActive": "true"
         },
         {
-            "id": "4",
+            "id": 4,
             "license": "agsd63",
             "code": "KT1",
-            "cap": "60",
+            "cap": 60,
             "driver":{
                 "name": "Wood",
-                "contact": "1234567894"
+                "contact": 1234567894
             },
             "isActive": "true"
         },
         {
-            "id": "5",
+            "id": 5,
             "license": "vw5vw34",
             "code": "AP2",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Chris",
-                "contact": "1234567895"
+                "contact": 1234567895
             },
             "isActive": "true"
         },
         {
-            "id": "6",
+            "id": 6,
             "license": "jw39nks",
             "code": "AP3",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Biju",
-                "contact": "1234567896"
+                "contact": 1234567896
             },
             "isActive": "true"
         },
         {
-            "id": "7",
+            "id": 7,
             "license": "ia4928d",
             "code": "CM2",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Das",
-                "contact": "1234567897"
+                "contact": 1234567897
             },
             "isActive": "false"
         },
         {
-            "id": "8",
+            "id": 8,
             "license": "34kjhgv2",
             "code": "SP2",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Paul",
-                "contact": "1234567898"
+                "contact": 1234567898
             },
             "isActive": "true"
         },
         {
-            "id": "9",
+            "id": 9,
             "license": "oia8329d",
             "code": "KT2",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Deb",
-                "contact": "1234567899"
+                "contact": 1234567899
             },
             "isActive": "true"
         },
         {
-            "id": "10",
+            "id": 10,
             "license": "ajih46278",
             "code": "CM3",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Bir",
-                "contact": "1234567900"
+                "contact": 1234567900
             },
             "isActive": "true"
         },
         {
-            "id": "11",
+            "id": 11,
             "license": "pa77w8s",
             "code": "CM3",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Kuddus",
-                "contact": "1234567901"
+                "contact": 1234567901
             },
             "isActive": "false"
         },
         {
-            "id": "12",
+            "id": 12,
             "license": "qfc6s823",
             "code": "KT3",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Rahim",
-                "contact": "1234567902"
+                "contact": 1234567902
             },
             "isActive": "true"
         },
         {
-            "id": "13",
+            "id": 13,
             "license": "sodbis783",
             "code": "AP4",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Karim",
-                "contact": "1234567903"
+                "contact": 1234567903
             },
             "isActive": "true"
         },
         {
-            "id": "14",
+            "id": 14,
             "license": "sdihf3q3",
             "code": "SP3",
-            "cap": "50",
+            "cap": 50,
             "driver":{
                 "name": "Abdul",
-                "contact": "1234567904"
+                "contact": 1234567904
             },
             "isActive": "true"
         }
