@@ -1,0 +1,9 @@
+
+.map .leaflet-container {
+	height: 100%;
+}
+
+.popup__flag {
+	height: 50px;
+	width: auto;
+}
