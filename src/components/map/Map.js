@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useRef } from "react";
+import { Input } from "antd";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents, click, locationfound, Polyline } from "react-leaflet";
 import "./map.css"
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import icon from './icon.svg'
-import { ADD_MARKER, REMOVE_MARKER, SET_BUS_ROUTE } from "../../state/Constants";
-import { EDITING_BUS } from "./constants";
-import { Button } from "antd";
+import { ADD_STOPPAGE, SET_BUS_ROUTE, SET_STOPPAGE } from "../../state/Constants";
+import { EDITING_BUS, SET_LOADING } from "./constants";
+import { Button, Form } from "antd";
 import { useStateValue } from "../../state/StateProvider";
 import { mapPageContext } from "../../pages/leaflet"
+import { db } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 
 export default () => {
@@ -24,20 +27,11 @@ export default () => {
         }
     }, [] )
 
-    useEffect( () => {
-        if( stoppages ) console.log( stoppages );
-    }, [mapData] )
+    if( stoppages ) console.log( stoppages );
 
     const map = useMapEvents({
         click(e) {
-            dispatch( {
-                type: ADD_MARKER,
-                payload: {
-                    id: new Date().getTime(),
-                    position: e.latlng,
-                    bus_id: 8
-                }
-            } )
+            addStoppage( [e.latlng.lat, e.latlng.lng] );
         },
         locationfound(e) {
             console.log(e);
@@ -51,30 +45,77 @@ export default () => {
 		iconSize: [50, 60],
 	});
 
-    console.log( pageState, mapData );
+    const addStoppage = async ( position ) => {
+        
+        pageDispatch({
+            type: SET_LOADING,
+            payload: true
+        })
 
-    const handleStoppageClick = (stoppage) => {
+        const stoppage = {
+            id: new Date().getTime(),
+            position,
+            name: "default"
+        }
+
+        console.log("asdasdasdsa")
+
+        await setDoc(doc(db, "stoppages", stoppage.id.toString()), stoppage);
+        
+        // dispatch( {
+        //     type: ADD_STOPPAGE,
+        //     payload: 
+        // } 
+        
+        pageDispatch({
+            type: SET_LOADING,
+            payload: false
+        })
+    }
+
+    const handleStoppageClick = (stoppage, add) => {
         console.log(stoppage);
         if( pageState.state == EDITING_BUS ) {
-            dispatch( {
-                type: SET_BUS_ROUTE,
-                payload: {
-                    id: pageState.stateData.bus_id,
-                    route: [
-                        ...buses
-                            .find( bus => bus.id == pageState.stateData.bus_id).route,  
-                        stoppage,
-                    ]
-                }
-            } )
+            if( add ) {
+                // add stoppage to bus
+                dispatch( {
+                    type: SET_BUS_ROUTE,
+                    payload: {
+                        id: pageState.stateData.bus_id,
+                        route: [
+                            ...buses
+                                .find( bus => bus.id == pageState.stateData.bus_id).route,  
+                            stoppage.id,
+                        ]
+                    }
+                } )
+            } else {
+                // remove stoppage from bus
+                
+                dispatch( {
+                    type: SET_BUS_ROUTE,
+                    payload: {
+                        id: pageState.stateData.bus_id,
+                        route: [
+                            ...buses
+                                .find( bus => bus.id == pageState.stateData.bus_id).route
+                                .filter( st_id => st_id != stoppage.id )  
+                        ]
+                    }
+                } )
+            }
         }
-        // dispatch( {
-        //     type: REMOVE_MARKER,
-        //     payload: {
-        //         id: stoppage.id
-        //     }
-        // } )
     }
+
+    const handleStoppageUpdate = (stoppage) => {
+        dispatch( {
+            type: SET_STOPPAGE,
+            payload: {
+                ...stoppages.find( st => st.id == stoppage.id),
+                name: stoppage.name
+            }
+        } )
+    } 
 
     return (
         <>
@@ -87,15 +128,46 @@ export default () => {
                 pageState.state == EDITING_BUS && buses?.length > 0 &&
                 <Polyline 
                     pathOptions={{color: 'lime'}} 
-                    positions={buses.find( bus => bus.id == pageState.stateData.bus_id)?.route.map( st => st.position )}
+                    positions={buses
+                        .find( bus => bus.id == pageState.stateData.bus_id)?.route
+                        .map( stoppage_id => stoppages.find(st => st.id == stoppage_id ).position )}
                 />
             }
 
             { stoppages.map( stoppage => (
                 <Marker position={stoppage.position} icon={markerIcon} >
-                    <Popup>
-                        <div className="h-64 w-64">
-                            <Button onClick={() => handleStoppageClick(stoppage)} > Add to selected bus </Button>
+                    <Popup >
+                        <div className="px-2 py-4">
+                            <Form 
+                                initialValues={{
+                                    ...stoppage,
+                                }}
+                                onFinish={handleStoppageUpdate}
+                                className="flex mb-8 flex-col"
+                            >
+                                <Form.Item name="id" hidden>
+                                </Form.Item>
+                                <Form.Item label="Name:" name="name">
+                                    <Input />
+                                </Form.Item>
+                                <Button className="self-stretch" htmlType='submit' type='primary'>
+                                    Update
+                                </Button>
+                            </Form>
+
+                            <hr></hr>
+                            
+                            { 
+                                pageState.state == EDITING_BUS 
+                                && ( buses.find( bus => bus.id == pageState.stateData.bus_id).route.indexOf( stoppage.id ) == -1 
+                                    ?   <Button className="mt-4" type="secondary" onClick={() => handleStoppageClick(stoppage, true)} > 
+                                            Add to selected bus 
+                                        </Button>
+                                    :   <Button className="mt-4" type="secondary" onClick={() => handleStoppageClick(stoppage, false)} > 
+                                            Remove from selected bus 
+                                        </Button>
+                                )
+                            }
                         </div>
                     </Popup>
                 </Marker>

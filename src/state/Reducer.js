@@ -1,13 +1,14 @@
-import { SET_BUS_DATA, SET_BUS_ROUTE, ADD_MARKER, REMOVE_MARKER, SET_USER,  }	 from "./Constants";
+import { SET_BUS_DATA, SET_BUS_ROUTE, SET_USER, REMOVE_STOPPAGE, ADD_STOPPAGE, SET_STOPPAGE }	 from "./Constants";
 
 export const initialState = {
 	user: null,
 	map: {
-		position: [51.505, -0.09],
+		position: [24.8949, 91.8687],
 	},
 	stoppages: [{
+		name: "initial",
 		id: new Date().getTime(),
-		position: [51.505, -0.09],
+		position: [24.8949, 91.8687],
 	}],
 	buses: [{
 		id: 0,
@@ -24,7 +25,15 @@ const reducer = (state, { type, payload } ) => {
 				...state,
 				user: payload.user,
 			};
-		case ADD_MARKER:
+		case SET_STOPPAGE:
+			return {
+				...state,
+				stoppages: state.stoppages.map( stoppage => {
+					if( stoppage.id == payload.id ) return payload;
+					else return stoppage;
+				} )
+			}
+		case ADD_STOPPAGE:
 			return {
 				...state,
 				stoppages: [
@@ -32,7 +41,7 @@ const reducer = (state, { type, payload } ) => {
 					payload
 				],
 			};
-		case REMOVE_MARKER:
+		case REMOVE_STOPPAGE:
 			if( !state.stoppages.length ) return state;
 			return {
 				...state,

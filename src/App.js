@@ -13,8 +13,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 function App() {
 	const [loading, setLoading] = useState(true);
 	const [{ user }, action] = useStateValue();
+	const [ mother_state, action_mother ] = useStateValue();
 	const location = useLocation();
 	const navigate = useNavigate();
+
+	useEffect( () => console.log(mother_state), [ mother_state ] )
 
 	useEffect(() => {
 		//check if user exists
@@ -45,14 +48,14 @@ function App() {
 
 	return (
 		<Layout>
-			{loading ? (
+			{/* {loading ? (
 				<Spinner />
-			) : (
+			) : ( */}
 				<>
 					{user && <ProtectedRoutes />}
 					<PublicRoutes />
 				</>
-			)}
+			{/* )} */}
 		</Layout>
 	);
 }

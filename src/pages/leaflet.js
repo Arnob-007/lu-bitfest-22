@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useReducer, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { ADD_MARKER, REMOVE_MARKER } from "../state/Constants";
-import { SET_EDITING_BUS, DEFAULT, EDITING_BUS } from "../components/map/constants"
+import { SET_EDITING_BUS, DEFAULT, EDITING_BUS, LOADING, SET_LOADING } from "../components/map/constants"
 import Map from '../components/map/Map'
 import { compareCoordinates } from "../utils/mapUtils";
 import MapData from "../components/map/MapData";
+import { collection, doc, onSnapshot, query } from "firebase/firestore";
+import { db } from "../firebase";
 
 
 const initialState = {
@@ -24,6 +26,11 @@ const mapPageContextReducer = (state, { type, payload }) => {
 					bus_id: payload.id
 				}
 			};
+		case SET_LOADING:
+			return {
+				...state,
+				state: payload ? LOADING : DEFAULT
+			}
 		default:
 			return state;
 	}
@@ -32,6 +39,17 @@ const mapPageContextReducer = (state, { type, payload }) => {
 
 export default () => {
 
+	useEffect( () => {
+
+		onSnapshot(collection(db, "stoppages"), (querySnapshot) => {
+			const stoppages = [];
+			querySnapshot.forEach((doc) => {
+				stoppages.push(doc.data());
+			});
+			console.log( stoppages );
+		});
+
+	}, [] )
 
 	return (
 		<mapPageContext.Provider value={useReducer(mapPageContextReducer, initialState)}>
