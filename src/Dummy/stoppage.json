@@ -1,0 +1,47 @@
+{
+    "stoppages":[
+        {
+            "id":1,
+            "name": "Airport",
+            "position":[24.963851,91.861224],
+            "weight": 5
+        },
+        {
+            "id":2,
+            "name": "Ambarkhana",
+            "position":[24.903560,91.873610],
+            "weight": 12
+        },
+        {
+            "id":3,
+            "name": "Modina market",
+            "position":[24.823123,91.885210],
+            "weight": 24
+        },
+        {
+            "id":4,
+            "name": "SUST",
+            "position":[24.932560,91.891210],
+            "weight": 15
+        },
+        {
+            "id":5,
+            "name": "Temukhi",
+            "position":[24.912560,91.912810],
+            "weight": 7
+        },
+        {
+            "id":6,
+            "name": "Tilagor",
+            "position":[24.883560,91.873610],
+            "weight": 20
+        },
+        {
+            "id":7,
+            "name": "Shah Poran",
+            "position":[24.922260,91.873610],
+            "weight": 3
+
+        }
+    ]
+}
