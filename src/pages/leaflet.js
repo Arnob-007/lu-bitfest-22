@@ -1,12 +1,13 @@
 import React, { createContext, useEffect, useReducer, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { ADD_MARKER, REMOVE_MARKER } from "../state/Constants";
-import { SET_EDITING_BUS, DEFAULT, EDITING_BUS, LOADING, SET_LOADING } from "../components/map/constants"
+import { ADD_MARKER, REMOVE_MARKER, SET_BUSES, SET_STOPPAGE, SET_STOPPAGES } from "../state/Constants";
+import { SET_EDITING_BUS, DEFAULT, EDITING_BUS, LOADING, SET_LOADING, SET_ADDING_NEW_STOPPAGE, ADDING_NEW_STOPPAGE } from "../components/map/constants"
 import Map from '../components/map/Map'
 import { compareCoordinates } from "../utils/mapUtils";
 import MapData from "../components/map/MapData";
 import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
+import { useStateValue } from "../state/StateProvider";
 
 
 const initialState = {
@@ -31,6 +32,11 @@ const mapPageContextReducer = (state, { type, payload }) => {
 				...state,
 				state: payload ? LOADING : DEFAULT
 			}
+		case SET_ADDING_NEW_STOPPAGE:
+			return {
+				...state,
+				state: payload ? ADDING_NEW_STOPPAGE : DEFAULT	
+			}
 		default:
 			return state;
 	}
@@ -39,6 +45,9 @@ const mapPageContextReducer = (state, { type, payload }) => {
 
 export default () => {
 
+	const [ state, dispatch ] = useReducer(mapPageContextReducer, initialState);
+	const [ rootState, rootDispatch ] = useStateValue();
+
 	useEffect( () => {
 
 		onSnapshot(collection(db, "stoppages"), (querySnapshot) => {
@@ -46,13 +55,30 @@ export default () => {
 			querySnapshot.forEach((doc) => {
 				stoppages.push(doc.data());
 			});
-			console.log( stoppages );
+
+			rootDispatch( {
+				type: SET_STOPPAGES,
+				payload: stoppages
+			} )
+		});
+
+		onSnapshot(collection(db, "buses"), (querySnapshot) => {
+			const buses = [];
+			querySnapshot.forEach((doc) => {
+				buses.push(doc.data());
+			});
+
+			rootDispatch( {
+				type: SET_BUSES,
+				payload: buses
+			} )
+			console.log( buses );
 		});
 
 	}, [] )
 
 	return (
-		<mapPageContext.Provider value={useReducer(mapPageContextReducer, initialState)}>
+		<mapPageContext.Provider value={[state, dispatch]}>
 			<div className="w-screen h-screen grid grid-cols-2">
 				<div className="w-full">
 					<MapData />

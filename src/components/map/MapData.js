@@ -1,11 +1,12 @@
 import { Button, Spin } from "antd";
+import { doc, setDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useRef } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { db } from "../../firebase";
 import { mapPageContext } from "../../pages/leaflet";
 import { useStateValue } from "../../state/StateProvider";
 import Spinner from "../../utils/Spinner";
-import { LOADING, SET_EDITING_BUS } from "./constants";
+import { LOADING, SET_ADDING_NEW_STOPPAGE, SET_EDITING_BUS, SET_LOADING } from "./constants";
 
 export default () => {
 
@@ -21,9 +22,42 @@ export default () => {
         } )
     }
 
-    const save = (bus_id) => {
-        db.collection("buses").doc( bus_id ).set({
+    const save = async (bus_id) => {
+        pageDispatch({
+            type: SET_LOADING,
+            payload: true
+        })
+        await setDoc(doc(db, "buses", bus_id.toString()), {
             ...buses.find( bus => bus.id == bus_id )
+        });
+        pageDispatch({
+            type: SET_LOADING,
+            payload: false
+        })
+    }
+
+    const handleAddNewStoppage = () => {
+        pageDispatch( {
+            type: SET_ADDING_NEW_STOPPAGE,
+            payload: true
+        } )
+    }
+
+
+    const handleAddNewBus = async () => {
+        pageDispatch({
+            type: SET_LOADING,
+            payload: true
+        })
+        const bus = {
+            id: new Date().getTime(),
+            route: [],
+            color: '#369'
+        }
+        await setDoc(doc(db, "buses", bus.id.toString()), { ...bus });
+        pageDispatch({
+            type: SET_LOADING,
+            payload: false
         })
     }
 
@@ -35,7 +69,7 @@ export default () => {
             { buses && buses.map( bus => (
                 <div className="mx-8 my-4 px-4 py-2 rounded-md pl-8 shadow-lg">
                     <div className="grid grid-cols-6" >
-                        <div className="col-start-1 col-span-1 self-center text-xl">
+                        <div className="col-start-1 col-span-3 self-center text-xl">
                             Bus no. { bus.id }
                         </div>
                         <div className="col-start-6 flex flex-col gap-y-2" >
@@ -54,8 +88,9 @@ export default () => {
                     </div>
                 </div>
             ) ) }
-            <div className="absolute bottom-0 right-0 m-8">
-                <Button type="primary" size="large" > Save Route Data </Button>
+            <div className="absolute bottom-0 right-0 m-8 flex gap-x-4">
+                <Button type="primary" size="large" onClick={handleAddNewBus} > Add New Bus </Button>
+                <Button type="primary" size="large" onClick={handleAddNewStoppage} > Add new stoppage </Button>
             </div>
         </div>
 	)

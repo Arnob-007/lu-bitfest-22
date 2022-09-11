@@ -6,12 +6,12 @@ import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import icon from './icon.svg'
 import { ADD_STOPPAGE, SET_BUS_ROUTE, SET_STOPPAGE } from "../../state/Constants";
-import { EDITING_BUS, SET_LOADING } from "./constants";
+import { ADDING_NEW_STOPPAGE, EDITING_BUS, SET_LOADING } from "./constants";
 import { Button, Form } from "antd";
 import { useStateValue } from "../../state/StateProvider";
 import { mapPageContext } from "../../pages/leaflet"
 import { db } from "../../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
 
 export default () => {
@@ -31,7 +31,7 @@ export default () => {
 
     const map = useMapEvents({
         click(e) {
-            addStoppage( [e.latlng.lat, e.latlng.lng] );
+            pageState.state == ADDING_NEW_STOPPAGE && addStoppage( [e.latlng.lat, e.latlng.lng] );
         },
         locationfound(e) {
             console.log(e);
@@ -107,7 +107,14 @@ export default () => {
         }
     }
 
-    const handleStoppageUpdate = (stoppage) => {
+    const handleStoppageUpdate = async (stoppage) => {
+        pageDispatch({
+            type: SET_LOADING,
+            payload: true
+        })
+
+        await updateDoc(doc(db, "stoppages", stoppage.id.toString()), stoppage);
+
         dispatch( {
             type: SET_STOPPAGE,
             payload: {
@@ -115,6 +122,11 @@ export default () => {
                 name: stoppage.name
             }
         } )
+
+        pageDispatch({
+            type: SET_LOADING,
+            payload: false
+        })
     } 
 
     return (
@@ -137,7 +149,7 @@ export default () => {
             { stoppages.map( stoppage => (
                 <Marker position={stoppage.position} icon={markerIcon} >
                     <Popup >
-                        <div className="px-2 py-4">
+                        <div className="px-2 py-4 min-w-[200px]">
                             <Form 
                                 initialValues={{
                                     ...stoppage,

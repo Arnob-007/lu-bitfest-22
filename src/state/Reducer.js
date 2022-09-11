@@ -1,20 +1,12 @@
-import { SET_BUS_DATA, SET_BUS_ROUTE, SET_USER, REMOVE_STOPPAGE, ADD_STOPPAGE, SET_STOPPAGE }	 from "./Constants";
+import { SET_BUS_DATA, SET_BUS_ROUTE, SET_USER, REMOVE_STOPPAGE, ADD_STOPPAGE, SET_STOPPAGE, SET_STOPPAGES, SET_BUSES }	 from "./Constants";
 
 export const initialState = {
 	user: null,
 	map: {
 		position: [24.8949, 91.8687],
 	},
-	stoppages: [{
-		name: "initial",
-		id: new Date().getTime(),
-		position: [24.8949, 91.8687],
-	}],
-	buses: [{
-		id: 0,
-		route: [],
-		color: '#369'
-	}]
+	stoppages: [],
+	buses: []
 };
 
 const reducer = (state, { type, payload } ) => {
@@ -32,6 +24,12 @@ const reducer = (state, { type, payload } ) => {
 					if( stoppage.id == payload.id ) return payload;
 					else return stoppage;
 				} )
+			}
+		case SET_STOPPAGES:
+
+			return {
+				...state,
+				stoppages: [...payload]
 			}
 		case ADD_STOPPAGE:
 			return {
@@ -69,6 +67,11 @@ const reducer = (state, { type, payload } ) => {
 					if( bus.id == payload.id ) return payload;
 					else return bus;
 				} )
+			}
+		case SET_BUSES:
+			return {
+				...state,
+				buses: payload
 			}
 		default:
 			return state;
