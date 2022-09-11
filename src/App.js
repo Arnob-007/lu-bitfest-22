@@ -33,7 +33,7 @@ function App() {
 					location.pathname === "/register" ||
 					location.pathname === "/register/staff"
 				)
-					navigate("/profile");
+					navigate("/dashboard");
 			} else {
 				console.log(location.pathname);
 				action({ type: SET_USER, payload: { user: null } });

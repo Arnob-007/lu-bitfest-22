@@ -38,8 +38,12 @@ const ProfileModal = () => {
 	}, [user]);
 
 	return (
-		<div className='absolute top-3 right-6 cursor-pointer'>
-			<Avatar onClick={() => setShowModal(!showModal)} size='large'>
+		<div className='z-[10000]  absolute top-3 right-6 cursor-pointer'>
+			<Avatar
+				className='bg-primary shadow'
+				onClick={() => setShowModal(!showModal)}
+				size='large'
+			>
 				<UserOutlined className='text-xl' />
 			</Avatar>
 			<Modal
