@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Spinner from "./utils/Spinner";
-import Leaflet from "./pages/leaflet";
+import Leaflet from "./pages/Leaflet";
 
 const OfficeRegister = React.lazy(() => import("./pages/OfficeRegister"));
 const ConsumerRegister = React.lazy(() => import("./pages/ConsumerRegister"));
