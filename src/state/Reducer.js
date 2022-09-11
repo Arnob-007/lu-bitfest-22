@@ -58,6 +58,7 @@ const reducer = (state, { type, payload } ) => {
 						...bus,
 						route: payload.route
 					})
+					else return bus
 				} )
 			}
 		case SET_BUS_DATA: 
