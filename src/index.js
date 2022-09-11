@@ -1,20 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import "./index.sass";
+import "./index.sass";
 import App from "./App";
-// import { BrowserRouter as Router } from "react-router-dom";
-// import reportWebVitals from "./reportWebVitals";
-// import { StateProvider } from "./state/StateProvider";
-// import reducer, { initialState } from "./state/Reducer";
+import { BrowserRouter as Router } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
+import { StateProvider } from "./state/StateProvider";
+import reducer, { initialState } from "./state/Reducer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
-		{/* <StateProvider initialState={initialState} reducer={reducer}>
-			<Router> */}
+		<StateProvider initialState={initialState} reducer={reducer}>
+			<Router>
 				<App />
-			{/* </Router>
-		</StateProvider> */}
+			</Router>
+		</StateProvider>
 	</React.StrictMode>
 );
 
