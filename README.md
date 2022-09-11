@@ -131,9 +131,9 @@ demand for transit for the maximum number of consumers.
 
 3. Prepare a dummy dataset with the following requirements **[Mandatory feature | 7 points]**
     - [ ] 4 transport routes
-    - [ ] 10 buses
-        - [ ] Capacity: 50; Quantity: 5
-        - [ ] Capacity: 35; Quantity: 10
+    - [ ] 14 buses
+        - [ ] Capacity: 60; Quantity: 4
+        - [ ] Capacity: 50; Quantity: 10
     - [ ] 10K students distributed into
         - [ ] 7 departments
             - [ ] CSE
