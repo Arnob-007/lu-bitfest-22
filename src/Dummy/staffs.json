@@ -1,0 +1,205 @@
+{
+    "staff":
+    [
+        {
+            "id" :1,
+            "code":"ABCDE"
+        },
+        {
+            "id" :2,
+            "code":"ABCED"
+        },
+        {
+            "id" :3,
+            "code":"ABDCE"
+        },
+        {
+            "id" :4,
+            "code":"ABDEC"
+        },
+        {
+            "id" :5,
+            "code":"ABEDC"
+        },
+        {
+            "id" :6,
+            "code":"ABECD"
+        },
+        {
+            "id" :7,
+            "code":"ACBDE"
+        },
+        {
+            "id" :8,
+            "code":"ACBED"
+        },
+        {
+            "id" :9,
+            "code":"ACDBE"
+        },
+        {
+            "id" :10,
+            "code":"ACDEB"
+        },
+        {
+            "id" :11,
+            "code":"ACEDB"
+        },
+        {
+            "id" :12,
+            "code":"ACEBD"
+        },
+        {
+            "id" :13,
+            "code":"ADCBE"
+        },
+        {
+            "id" :14,
+            "code":"ADCEB"
+        },
+        {
+            "id" :15,
+            "code":"ADBCE"
+        },
+        {
+            "id" :16,
+            "code":"ADBEC"
+        },
+        {
+            "id" :17,
+            "code":"ADEBC"
+        },
+        {
+            "id" :18,
+            "code":"ADECB"
+        },
+        {
+            "id" :19,
+            "code":"AECDB"
+        },
+        {
+            "id" :20,
+            "code":"AECBD"
+        },
+        {
+            "id" :21,
+            "code":"AEDCB"
+        },
+        {
+            "id" :22,
+            "code":"AEDBC"
+        },
+        {
+            "id" :23,
+            "code":"AEBDC"
+        },
+        {
+            "id" :24,
+            "code":"AEBCD"
+        },
+        {
+            "id" :25,
+            "code":"BACDE"
+        },
+        {
+            "id" :26,
+            "code":"BACED"
+        },
+        {
+            "id" :27,
+            "code":"BADCE"
+        },
+        {
+            "id" :28,
+            "code":"BADEC"
+        },
+        {
+            "id" :29,
+            "code":"BAEDC"
+        },
+        {
+            "id" :30,
+            "code":"BAECD"
+        },
+        {
+            "id" :31,
+            "code":"BCADE"
+        },
+        {
+            "id" :32,
+            "code":"BCAED"
+        },
+        {
+            "id" :33,
+            "code":"BCDAE"
+        },
+        {
+            "id" :34,
+            "code":"BCDEA"
+        },
+        {
+            "id" :35,
+            "code":"BCEDA"
+        },
+        {
+            "id" :36,
+            "code":"BCEAD"
+        },
+        {
+            "id" :37,
+            "code":"BDCAE"
+        },
+        {
+            "id" :38,
+            "code":"BDCEA"
+        },
+        {
+            "id" :39,
+            "code":"BDACE"
+        },
+        {
+            "id" :40,
+            "code":"BDAEC"
+        },
+        {
+            "id" :41,
+            "code":"BDEAC"
+        },
+        {
+            "id" :42,
+            "code":"BDECA"
+        },
+        {
+            "id" :43,
+            "code":"BECDA"
+        },
+        {
+            "id" :44,
+            "code":"BECAD"
+        },
+        {
+            "id" :45,
+            "code":"BEDCA"
+        },
+        {
+            "id" :46,
+            "code":"BEDAC"
+        },
+        {
+            "id" :47,
+            "code":"BEADC"
+        },
+        {
+            "id" :48,
+            "code":"BEACD"
+        },
+        {
+            "id" :49,
+            "code":"CBADE"
+        },
+        {
+            "id" :50,
+            "code":"CBAED"
+        }
+    ]
+}

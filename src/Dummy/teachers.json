@@ -1,0 +1,405 @@
+{
+    "teachers":
+    [
+        {
+            "id" :1,
+            "code":"ABCDEF"
+        },
+        {
+            "id" :2,
+            "code":"ABCDFE"
+        },
+        {
+            "id" :3,
+            "code":"ABCEDF"
+        },
+        {
+            "id" :4,
+            "code":"ABCEFD"
+        },
+        {
+            "id" :5,
+            "code":"ABCFED"
+        },
+        {
+            "id" :6,
+            "code":"ABCFDE"
+        },
+        {
+            "id" :7,
+            "code":"ABDCEF"
+        },
+        {
+            "id" :8,
+            "code":"ABDCFE"
+        },
+        {
+            "id" :9,
+            "code":"ABDECF"
+        },
+        {
+            "id" :10,
+            "code":"ABDEFC"
+        },
+        {
+            "id" :11,
+            "code":"ABDFEC"
+        },
+        {
+            "id" :12,
+            "code":"ABDFCE"
+        },
+        {
+            "id" :13,
+            "code":"ABEDCF"
+        },
+        {
+            "id" :14,
+            "code":"ABEDFC"
+        },
+        {
+            "id" :15,
+            "code":"ABECDF"
+        },
+        {
+            "id" :16,
+            "code":"ABECFD"
+        },
+        {
+            "id" :17,
+            "code":"ABEFCD"
+        },
+        {
+            "id" :18,
+            "code":"ABEFDC"
+        },
+        {
+            "id" :19,
+            "code":"ABFDEC"
+        },
+        {
+            "id" :20,
+            "code":"ABFDCE"
+        },
+        {
+            "id" :21,
+            "code":"ABFEDC"
+        },
+        {
+            "id" :22,
+            "code":"ABFECD"
+        },
+        {
+            "id" :23,
+            "code":"ABFCED"
+        },
+        {
+            "id" :24,
+            "code":"ABFCDE"
+        },
+        {
+            "id" :25,
+            "code":"ACBDEF"
+        },
+        {
+            "id" :26,
+            "code":"ACBDFE"
+        },
+        {
+            "id" :27,
+            "code":"ACBEDF"
+        },
+        {
+            "id" :28,
+            "code":"ACBEFD"
+        },
+        {
+            "id" :29,
+            "code":"ACBFED"
+        },
+        {
+            "id" :30,
+            "code":"ACBFDE"
+        },
+        {
+            "id" :31,
+            "code":"ACDBEF"
+        },
+        {
+            "id" :32,
+            "code":"ACDBFE"
+        },
+        {
+            "id" :33,
+            "code":"ACDEBF"
+        },
+        {
+            "id" :34,
+            "code":"ACDEFB"
+        },
+        {
+            "id" :35,
+            "code":"ACDFEB"
+        },
+        {
+            "id" :36,
+            "code":"ACDFBE"
+        },
+        {
+            "id" :37,
+            "code":"ACEDBF"
+        },
+        {
+            "id" :38,
+            "code":"ACEDFB"
+        },
+        {
+            "id" :39,
+            "code":"ACEBDF"
+        },
+        {
+            "id" :40,
+            "code":"ACEBFD"
+        },
+        {
+            "id" :41,
+            "code":"ACEFBD"
+        },
+        {
+            "id" :42,
+            "code":"ACEFDB"
+        },
+        {
+            "id" :43,
+            "code":"ACFDEB"
+        },
+        {
+            "id" :44,
+            "code":"ACFDBE"
+        },
+        {
+            "id" :45,
+            "code":"ACFEDB"
+        },
+        {
+            "id" :46,
+            "code":"ACFEBD"
+        },
+        {
+            "id" :47,
+            "code":"ACFBED"
+        },
+        {
+            "id" :48,
+            "code":"ACFBDE"
+        },
+        {
+            "id" :49,
+            "code":"ADCBEF"
+        },
+        {
+            "id" :50,
+            "code":"ADCBFE"
+        },
+        {
+            "id" :51,
+            "code":"ADCEBF"
+        },
+        {
+            "id" :52,
+            "code":"ADCEFB"
+        },
+        {
+            "id" :53,
+            "code":"ADCFEB"
+        },
+        {
+            "id" :54,
+            "code":"ADCFBE"
+        },
+        {
+            "id" :55,
+            "code":"ADBCEF"
+        },
+        {
+            "id" :56,
+            "code":"ADBCFE"
+        },
+        {
+            "id" :57,
+            "code":"ADBECF"
+        },
+        {
+            "id" :58,
+            "code":"ADBEFC"
+        },
+        {
+            "id" :59,
+            "code":"ADBFEC"
+        },
+        {
+            "id" :60,
+            "code":"ADBFCE"
+        },
+        {
+            "id" :61,
+            "code":"ADEBCF"
+        },
+        {
+            "id" :62,
+            "code":"ADEBFC"
+        },
+        {
+            "id" :63,
+            "code":"ADECBF"
+        },
+        {
+            "id" :64,
+            "code":"ADECFB"
+        },
+        {
+            "id" :65,
+            "code":"ADEFCB"
+        },
+        {
+            "id" :66,
+            "code":"ADEFBC"
+        },
+        {
+            "id" :67,
+            "code":"ADFBEC"
+        },
+        {
+            "id" :68,
+            "code":"ADFBCE"
+        },
+        {
+            "id" :69,
+            "code":"ADFEBC"
+        },
+        {
+            "id" :70,
+            "code":"ADFECB"
+        },
+        {
+            "id" :71,
+            "code":"ADFCEB"
+        },
+        {
+            "id" :72,
+            "code":"ADFCBE"
+        },
+        {
+            "id" :73,
+            "code":"AECDBF"
+        },
+        {
+            "id" :74,
+            "code":"AECDFB"
+        },
+        {
+            "id" :75,
+            "code":"AECBDF"
+        },
+        {
+            "id" :76,
+            "code":"AECBFD"
+        },
+        {
+            "id" :77,
+            "code":"AECFBD"
+        },
+        {
+            "id" :78,
+            "code":"AECFDB"
+        },
+        {
+            "id" :79,
+            "code":"AEDCBF"
+        },
+        {
+            "id" :80,
+            "code":"AEDCFB"
+        },
+        {
+            "id" :81,
+            "code":"AEDBCF"
+        },
+        {
+            "id" :82,
+            "code":"AEDBFC"
+        },
+        {
+            "id" :83,
+            "code":"AEDFBC"
+        },
+        {
+            "id" :84,
+            "code":"AEDFCB"
+        },
+        {
+            "id" :85,
+            "code":"AEBDCF"
+        },
+        {
+            "id" :86,
+            "code":"AEBDFC"
+        },
+        {
+            "id" :87,
+            "code":"AEBCDF"
+        },
+        {
+            "id" :88,
+            "code":"AEBCFD"
+        },
+        {
+            "id" :89,
+            "code":"AEBFCD"
+        },
+        {
+            "id" :90,
+            "code":"AEBFDC"
+        },
+        {
+            "id" :91,
+            "code":"AEFDBC"
+        },
+        {
+            "id" :92,
+            "code":"AEFDCB"
+        },
+        {
+            "id" :93,
+            "code":"AEFBDC"
+        },
+        {
+            "id" :94,
+            "code":"AEFBCD"
+        },
+        {
+            "id" :95,
+            "code":"AEFCBD"
+        },
+        {
+            "id" :96,
+            "code":"AEFCDB"
+        },
+        {
+            "id" :97,
+            "code":"AFCDEB"
+        },
+        {
+            "id" :98,
+            "code":"AFCDBE"
+        },
+        {
+            "id" :99,
+            "code":"AFCEDB"
+        },
+        {
+            "id" :100,
+            "code":"AFCEBD"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+{
+    "routes":
+    [
+        {
+            "id": "1",
+            "start": "Shahporan",
+            "latitude": "",
+            "longitude": "",
+            "time": ""
+        },
+        {
+            "id":"2 ",
+            "start":"Airport",
+            "latitude": "",
+            "longitude": "",
+            "time": ""
+        }, 
+        {
+            "id": "3",
+            "start": "Cantonment",
+            "latitude": "",
+            "longitude": "",
+            "time": ""
+        },
+        {
+            "id":"4",
+            "start":"Kodomtoli",
+            "latitude": "",
+            "longitude": "",
+            "time": ""
+        }
+    ]  
+}
