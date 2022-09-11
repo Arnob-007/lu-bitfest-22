@@ -1,28 +1,28 @@
 import React, { createContext, useEffect, useReducer, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { ADD_MARKER } from "../components/map/actions";
+import { ADD_MARKER, REMOVE_MARKER } from "../state/Constants";
+import { SET_EDITING_BUS, DEFAULT, EDITING_BUS } from "../components/map/constants"
 import Map from '../components/map/Map'
+import { compareCoordinates } from "../utils/mapUtils";
+import MapData from "../components/map/MapData";
 
 
 const initialState = {
-	position: [51.505, -0.09],
-	stoppages: [{
-		position: [51.505, -0.09],
-		bus_id: 0
-	}]
+	state: DEFAULT,
+	stateData: {}
 }
 
-const mapContext = createContext({});
+const mapPageContext = createContext({});
 
-const mapContextReducer = (state, action) => {
-	switch (action.type) {
-		case ADD_MARKER:
+const mapPageContextReducer = (state, { type, payload }) => {
+	switch (type) {
+		case SET_EDITING_BUS:
 			return {
 				...state,
-				stoppages: [
-					...(state.stoppages?state.stoppages:[]),
-					action.payload
-				],
+				state: EDITING_BUS,
+				stateData: {
+					bus_id: payload.id
+				}
 			};
 		default:
 			return state;
@@ -32,20 +32,22 @@ const mapContextReducer = (state, action) => {
 
 export default () => {
 
-	const [ mapData, setMapData ] = useState();
 
 	return (
-		<mapContext.Provider value={useReducer(mapContextReducer, initialState)}>
+		<mapPageContext.Provider value={useReducer(mapPageContextReducer, initialState)}>
 			<div className="w-screen h-screen grid grid-cols-2">
+				<div className="w-full">
+					<MapData />
+				</div>
 				<div className="h-full col-start-2 col-span-1"  >
 					<MapContainer className='w-full h-full' >
 						<Map />
 					</MapContainer>
 				</div>
 			</div>
-		</mapContext.Provider>
+		</mapPageContext.Provider>
 	)
 };
 
 
-export { mapContext }
+export { mapPageContext }

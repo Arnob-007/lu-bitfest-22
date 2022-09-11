@@ -1,0 +1,4 @@
+export const SET_EDITING_BUS = "SET_EDITING_BUS"
+export const EDITING_BUS = "EDITING_BUS"
+export const ADDING_STOPPAGE = "ADDING_STOPPAGE"
+export const DEFAULT = "DEFAULT"
