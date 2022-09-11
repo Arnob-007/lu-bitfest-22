@@ -20,6 +20,6 @@ const PublicRoutes = () => {
 	);
 };
 
-export const PUBLIC_ROUTES = ["/", "/register", "/register/staff"];
+export const PUBLIC_ROUTES = ["/", "/register", "/register/staff", "/leaflet"];
 
 export default PublicRoutes;
