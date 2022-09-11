@@ -43,5 +43,17 @@
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
-  }
+  },
+  "description": "Before you start working, know that we strive for quality. It means you can use any language, tools, third-party services/API, any architecture to show your skills. We will provide requirements that you have to meet to pass, but you can code extra features if you want. Keep in mind, don't overdo it for its sake. Prefer high-quality mandatory requirements over many optional features with lower quality.",
+  "main": "postcss.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arnob-007/lu-bitfest-22.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Arnob-007/lu-bitfest-22/issues"
+  },
+  "homepage": "https://github.com/Arnob-007/lu-bitfest-22#readme"
 }
