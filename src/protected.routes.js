@@ -6,20 +6,37 @@ const Profile = React.lazy(() => import("./pages/Profile"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Live = React.lazy(() => import("./pages/Live"));
 const Simulation = React.lazy(() => import("./pages/Simulation"));
+const Leaflet = React.lazy(() => import("./pages/Leaflet"));
 
-const ProtectedRoutes = () => {
+const ProtectedOfficeRoutes = () => {
 	return (
 		<Suspense fallback={<Spinner />}>
 			<Routes>
 				<Route path='/simulation' element={<Simulation />} />
 				<Route path='/live' element={<Live />} />
-				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path='/dashboard' element={<Leaflet />} />
 				<Route path='/profile' element={<Profile />} />
 			</Routes>
 		</Suspense>
 	);
 };
 
-export const PROTECTED_ROUTES = ["/profile", "/dashboard"];
+const ProtectedUserRoutes = () => {
+	return (
+		<Suspense fallback={<Spinner />}>
+			<Routes>
+				<Route path='/live' element={<Live />} />
+				<Route path='/dashboard' element={<Dashboard />} />
+			</Routes>
+		</Suspense>
+	);
+};
 
-export default ProtectedRoutes;
+export const PROTECTED_ROUTES = [
+	"/profile",
+	"/dashboard",
+	"/simulation",
+	"/live",
+];
+
+export { ProtectedOfficeRoutes, ProtectedUserRoutes };
