@@ -8,4 +8,6 @@ export const SET_BUS_ROUTE = "SET_BUS_ROUTE"
 export const SET_BUS_DATA = "SET_BUS_DATA"
 export const SET_BUSES = "SET_BUSES" 
 
+export const LEADING_POS = [24.86954406090458, 91.8049602415959]
+
 

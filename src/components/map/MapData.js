@@ -10,6 +10,7 @@ import moment from "moment/moment";
 import React, { useContext, useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { mapPageContext } from "../../pages/Leaflet";
+import { SET_BUSES } from "../../state/Constants";
 import { useStateValue } from "../../state/StateProvider";
 import { generateRoutes } from "../../utils/generateRoutes";
 import Spinner from "../../utils/Spinner";
@@ -97,7 +98,7 @@ const MapData = () => {
 
 			const tempTimes = [] 
             tempRequests.forEach((r) => {
-				if( !tempTimes.includes(moment.unix(r.time.seconds).format("H")) ) 
+ 				if( !tempTimes.includes(moment.unix(r.time.seconds).format("H")) ) 
                     tempTimes.push( moment.unix(r.time.seconds).format("H") )
             });
 
@@ -120,7 +121,20 @@ const MapData = () => {
 
 	const handleRoutesGeneration = async () => {
 		const res = generateRoutes(stopsWithWeight, buses, times);
-		console.log(res);
+		window.res = res;
+        const buses_t = [...buses];
+        Object.keys( res ).forEach( time => {
+            res[time].forEach( ({bus_id, path}) => {
+                buses_t.find( bus => bus.id == bus_id ).route = path.map( p => {
+                    return stoppages[p.i].id;
+                } )
+                buses_t.find( bus => bus.id == bus_id ).route.push( "leading" )
+            } )
+        } )
+        dispatch( {
+            type: SET_BUSES,
+            payload: buses_t
+        } )
 	};
 
 	const getColumns = () => {
@@ -141,6 +155,7 @@ const MapData = () => {
 	};
 
 	console.log(stopsWithWeight);
+
 
 	return (
 		<div className='w-full min-h-full flex flex-col'>
@@ -182,18 +197,20 @@ const MapData = () => {
 						<div className='flex justify-between'>
 							<div>
 								<span className='text-[18px]'>Route </span>
-								<div className='py-2'>
-									{bus.route.map((stoppage_id, _i) => (
-										<>
-											<Tag>
-												{stoppages.find((st) => st.id === stoppage_id)?.name}
-											</Tag>
-											{_i !== bus?.route.length - 1 && (
-												<ArrowRightOutlined className='mr-2' />
-											)}
-										</>
-									))}
-								</div>
+                                {/* { times.map( time => ( */}
+                                    <div className='py-2'>
+                                        {bus.route.map((stoppage_id, _i) => (
+                                            <>
+                                                <Tag>
+                                                    {stoppages.find((st) => st.id === stoppage_id)?.name}
+                                                </Tag>
+                                                {_i !== bus?.route.length - 1 && (
+                                                    <ArrowRightOutlined className='mr-2' />
+                                                )}
+                                            </>
+                                        ))}
+                                    </div>
+                                // ) ) }
 							</div>
 							{pageState.state === EDITING_BUS &&
 								pageState.stateData.bus_id === bus.id && (
