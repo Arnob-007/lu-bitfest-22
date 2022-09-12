@@ -7,11 +7,13 @@ const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Live = React.lazy(() => import("./pages/Live"));
 const Simulation = React.lazy(() => import("./pages/Simulation"));
 const Leaflet = React.lazy(() => import("./pages/Leaflet"));
+const AddRequest = React.lazy(() => import("./pages/AddRequest"));
 
 const ProtectedOfficeRoutes = () => {
 	return (
 		<Suspense fallback={<Spinner />}>
 			<Routes>
+				<Route path='/request' element={<AddRequest />} />
 				<Route path='/simulation' element={<Simulation />} />
 				<Route path='/live' element={<Live />} />
 				<Route path='/dashboard' element={<Leaflet />} />

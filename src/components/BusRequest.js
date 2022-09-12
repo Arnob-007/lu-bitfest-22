@@ -1,12 +1,20 @@
 import { CarTwoTone, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, message, Select, TimePicker } from "antd";
+import {
+	Button,
+	DatePicker,
+	Form,
+	Input,
+	message,
+	Select,
+	TimePicker,
+} from "antd";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useStateValue } from "../state/StateProvider";
 
-const BusRequest = () => {
+const BusRequest = ({ official = false }) => {
 	const [stoppages, setStoppages] = useState([]);
 
 	useEffect(() => {
@@ -25,21 +33,31 @@ const BusRequest = () => {
 	return (
 		<div>
 			<div className='py-6 mx-12  flex flex-col gap-5'>
-				<Request key='incoming' type='incoming' stoppages={stoppages} />
-				<Request key='outgoing' type='outgoing' stoppages={stoppages} />
+				<Request
+					key='incoming'
+					type='incoming'
+					stoppages={stoppages}
+					official={official}
+				/>
+				<Request
+					key='outgoing'
+					type='outgoing'
+					stoppages={stoppages}
+					official={official}
+				/>
 			</div>
 		</div>
 	);
 };
 
-const Request = ({ type, stoppages }) => {
+const Request = ({ type, stoppages, official }) => {
 	const [loading, setLoading] = useState(false);
 	const [{ user }] = useStateValue();
 	const [form] = Form.useForm();
 
 	const handleSubmit = async () => {
 		setLoading(true);
-		try {
+		const addToDB = async () => {
 			const formData = form.getFieldsValue();
 			const data = {
 				date: formData.date.toDate(),
@@ -49,9 +67,26 @@ const Request = ({ type, stoppages }) => {
 				userId: user._id,
 			};
 
-			await addDoc(collection(db, "requests"), data);
+			const res = await addDoc(collection(db, "requests"), data);
+			console.log(res);
+		};
+		try {
+			if (official) {
+				const { count } = form.getFieldsValue();
+				console.log(count);
+				const arr = [];
+				for (let i = 0; i < count; i++) {
+					arr.push(i);
+				}
+				console.log(arr);
+				for await (const num of arr) {
+					console.log("Running loop");
+					await addToDB();
+				}
+			} else {
+				await addToDB();
+			}
 			message.success("Request submitted");
-			console.log(data);
 		} catch (e) {
 			console.log(e);
 			message.error("Something went wrong. Please try again");
@@ -72,6 +107,17 @@ const Request = ({ type, stoppages }) => {
 				name='incomingForm'
 				onFinish={handleSubmit}
 			>
+				{official && (
+					<Form.Item
+						label='Passengers'
+						name='count'
+						rules={[
+							{ required: true, message: "Please input passenger count" },
+						]}
+					>
+						<Input type='number' placeholder='Passenger count' />
+					</Form.Item>
+				)}
 				<Form.Item
 					label='Journey date'
 					initialValue={moment().add(1, "day")}
