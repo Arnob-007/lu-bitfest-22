@@ -1,12 +1,13 @@
 export const generateRoutes = (stoppages, buses_main, times) => {
-	console.log(buses_main);
+	console.log("buses", buses_main);
+	console.log("stoppages", stoppages);
+	console.log("times", times);
 	buses_main = buses_main.map((bus) => {
 		return { ...bus, capacity: parseInt(bus.capacity) };
 	});
-	console.log("Buses", buses_main);
 	let time_demand = stoppages.reduce(
 		(prev, curr) => {
-			console.log("CURRENT", curr);
+			console.log("CURRENT", curr, prev);
 			Object.keys(curr.weight).forEach((time) => {
 				prev[time] += curr.weight[time];
 			});
@@ -15,13 +16,19 @@ export const generateRoutes = (stoppages, buses_main, times) => {
 		times.reduce((prev, curr) => ({ ...prev, [curr]: 0 }), {})
 	);
 
-	time_demand = Object.keys(time_demand).map((time) => ({
-		time,
-		demand: time_demand[time],
-	}));
+	time_demand = Object.keys(time_demand).map((time) => {
+		return {
+			time,
+			demand: time_demand[time],
+		}
+	});
+
+	// console.log(time_demand)
+
 
 	const generate_paths = (st_i, bus, time) => {
 		console.log("gg");
+		console.log("st_i", st_i);
 		if (stoppages[st_i].weight[time] <= 0 || stoppages[st_i].disabled)
 			return [];
 		let routes = [];
@@ -34,11 +41,12 @@ export const generateRoutes = (stoppages, buses_main, times) => {
 			return [[{ i: st_i, p: passenger_taken }]];
 		}
 
-		// stoppages[st_i].disabled = true;
+		stoppages[st_i].disabled = true;
 		bus.capacity -= passenger_taken;
 		stoppages[st_i].weight[time] -= passenger_taken;
 
 		for (let st_ix = 0; st_ix < stoppages.length; st_ix++) {
+			console.log("st_ix", st_ix);
 			const ret = generate_paths(st_ix, { ...bus }, time);
 			if (ret.length > 0) {
 				routes.push(
@@ -51,7 +59,7 @@ export const generateRoutes = (stoppages, buses_main, times) => {
 			}
 		}
 
-		// stoppages[st_i].disabled = false;
+		stoppages[st_i].disabled = false;
 		bus.capacity += passenger_taken;
 		stoppages[st_i].weight[time] += passenger_taken;
 
@@ -113,7 +121,7 @@ export const generateRoutes = (stoppages, buses_main, times) => {
 
 	let bus_idx = 0;
 	let time_demand_idx = 0;
-	console.log("Time demand idx", time_demand);
+	// console.log("Time demand idx", time_demand);
 	for (; bus_idx < buses_main.length; bus_idx++) {
 		while (
 			time_demand_idx < time_demand.length &&
@@ -143,12 +151,20 @@ export const generateRoutes = (stoppages, buses_main, times) => {
 			(bus) => allocated_bus[time].indexOf(bus.id) !== -1
 		);
 
-		console.log("buses", allocated_bus[time]);
+		// console.log("allocated buses", allocated_bus[time]);
 
-		const ret = chk(0, 0, time, buses);
+		// console.log( generate_paths( 0, buses[0], 8 ) )
 
-		schedule[time] = ret.plan;
-		console.log(ret.plan);
+		let max_cost = -1;
+		for( let st_ix = 0; st_ix < stoppages.length; st_ix++ ) {
+			const ret = chk( 0, st_ix, time, buses);
+			if( ret.cost > max_cost ) {
+				max_cost = ret.cost;
+				schedule[time] = ret.plan;
+			}
+			// console.log(ret.plan);
+		}
+
 	});
 
 	console.log(generate_paths(0, buses_main[0], 8));

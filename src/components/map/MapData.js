@@ -95,9 +95,11 @@ const MapData = () => {
 				tempRequests.push({ id: d.id, ...d.data() });
 			});
 
-			const tempTimes = tempRequests.map((r) =>
-				moment.unix(r.time.seconds).format("H")
-			);
+			const tempTimes = [] 
+            tempRequests.forEach((r) => {
+				if( !tempTimes.includes(moment.unix(r.time.seconds).format("H")) ) 
+                    tempTimes.push( moment.unix(r.time.seconds).format("H") )
+            });
 
 			let tempStopsWithWeight = [];
 			stoppages.forEach((s) => {
