@@ -48,14 +48,14 @@ function App() {
 
 	return (
 		<Layout>
-			{/* {loading ? (
+			{loading ? (
 				<Spinner />
-			) : ( */}
+			) : (
 				<>
 					{user && <ProtectedRoutes />}
 					<PublicRoutes />
 				</>
-			{/* )} */}
+			)}
 		</Layout>
 	);
 }
