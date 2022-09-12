@@ -63,6 +63,7 @@ const Leaflet = () => {
 				type: SET_STOPPAGES,
 				payload: stoppages,
 			});
+
 		});
 
 		onSnapshot(collection(db, "buses"), (querySnapshot) => {
@@ -75,7 +76,7 @@ const Leaflet = () => {
 				type: SET_BUSES,
 				payload: buses,
 			});
-			console.log(buses);
+			console.log( JSON.stringify(buses) );
 		});
 	}, []);
 
