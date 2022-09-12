@@ -4,12 +4,14 @@ import {
 	EditTwoTone,
 	PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Divider, Form, message, Modal, Tag } from "antd";
-import { doc, setDoc } from "firebase/firestore";
-import React, { useContext, useState } from "react";
+import { Button, Divider, Form, message, Modal, Table, Tag } from "antd";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import moment from "moment/moment";
+import React, { useContext, useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { mapPageContext } from "../../pages/Leaflet";
 import { useStateValue } from "../../state/StateProvider";
+import { generateRoutes } from "../../utils/generateRoutes";
 import Spinner from "../../utils/Spinner";
 import AddBus from "./AddBus";
 import {
@@ -24,6 +26,9 @@ import {
 const MapData = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [{ buses, stoppages, map: mapData }, dispatch] = useStateValue();
+	const [requests, setRequests] = useState([]);
+	const [times, setTimes] = useState([]);
+	const [stopsWithWeight, setStopsWithWeight] = useState([]);
 	const [pageState, pageDispatch] = useContext(mapPageContext);
 
 	console.warn(buses);
@@ -82,6 +87,59 @@ const MapData = () => {
 		});
 	};
 
+	useEffect(() => {
+		const fetchRequirements = async () => {
+			const snap = await getDocs(collection(db, "requests"));
+			const tempRequests = [];
+			snap.docs.forEach((d) => {
+				tempRequests.push({ id: d.id, ...d.data() });
+			});
+
+			const tempTimes = tempRequests.map((r) =>
+				moment.unix(r.time.seconds).format("H")
+			);
+
+			let tempStopsWithWeight = [];
+			stoppages.forEach((s) => {
+				let d = { ...s, weight: {} };
+				tempTimes.forEach((t) => (d.weight[t] = 0));
+				const weights = tempRequests.filter((r) => r.stoppage === s.id);
+				weights.forEach(
+					(w) => (d.weight[moment.unix(w.time.seconds).format("H")] += 1)
+				);
+				tempStopsWithWeight.push(d);
+			});
+			setStopsWithWeight(tempStopsWithWeight);
+			setTimes(tempTimes);
+			setRequests(tempRequests);
+		};
+		fetchRequirements();
+	}, [stoppages]);
+
+	const handleRoutesGeneration = async () => {
+		const res = generateRoutes(stopsWithWeight, buses, times);
+		console.log(res);
+	};
+
+	const getColumns = () => {
+		const arr = [];
+		arr.push({
+			title: "Stoppage",
+			dataIndex: "name",
+			key: "name",
+		});
+		Object.keys(stopsWithWeight[0]?.weight).forEach((k) =>
+			arr.push({
+				title: `Time ${k}`,
+				dataIndex: ["weight", k],
+				key: "demand",
+			})
+		);
+		return arr;
+	};
+
+	console.log(stopsWithWeight);
+
 	return (
 		<div className='w-full min-h-full flex flex-col'>
 			{pageState.state === LOADING && (
@@ -90,6 +148,16 @@ const MapData = () => {
 					style={{ background: "rgba(0,0,0,0.1)" }}
 				>
 					<Spinner />
+				</div>
+			)}
+			{stopsWithWeight.length > 0 && (
+				<div className='flex w-10/12 mx-10'>
+					<Table
+						pagination={{ pageSize: 5 }}
+						className='w-full'
+						dataSource={stopsWithWeight}
+						columns={getColumns()}
+					/>
 				</div>
 			)}
 			{buses &&
@@ -137,11 +205,17 @@ const MapData = () => {
 						</div>
 					</div>
 				))}
-			<div className='m-8 flex gap-x-4'>
+			<div className='m-8 flex gap-x-4 justify-between'>
 				<Button type='primary' size='large' onClick={handleAddNewBus}>
 					{" "}
 					Add New Bus{" "}
 				</Button>
+				<div className='flex justify-end'>
+					<Button type='primary' size='large' onClick={handleRoutesGeneration}>
+						{" "}
+						Auto generate routes
+					</Button>
+				</div>
 				<Button
 					className='absolute bottom-8 right-8 z-[1000] rounded-full'
 					type='primary'

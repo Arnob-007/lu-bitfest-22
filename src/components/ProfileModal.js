@@ -2,6 +2,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Form, Input, message, Modal } from "antd";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { SET_USER } from "../state/Constants";
 import { useStateValue } from "../state/StateProvider";
@@ -11,6 +12,7 @@ const ProfileModal = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [{ user }, action] = useStateValue();
 	const [form] = Form.useForm();
+	const navigate = useNavigate();
 
 	const handleSubmit = async () => {
 		setLoading(true);
@@ -126,7 +128,10 @@ const ProfileModal = () => {
 					)}
 					<div className='flex justify-between'>
 						<Button
-							onClick={() => auth.signOut()}
+							onClick={() => {
+								auth.signOut();
+								navigate("/");
+							}}
 							className='text-red-600'
 							type='text'
 						>

@@ -1,14 +1,11 @@
 import { Icon } from "leaflet";
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
-import BusRequest from "../components/BusRequest";
-import UserMap from "../components/UserMap";
 import icon from "../components/map/icon.svg";
 import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import { Select } from "antd";
 import moment from "moment";
-import { LoadingOutlined } from "@ant-design/icons";
 
 const Live = () => {
 	const [buses, setBuses] = useState([]);
