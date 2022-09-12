@@ -58,7 +58,7 @@ const ConsumerRegistrationForm = () => {
 			console.log(confirmationResult);
 			setCodeSent(true);
 		} catch (e) {
-			message.error("Something went wrong");
+			// message.error("Something went wrong");
 			console.log(e);
 		} finally {
 			setLoading(false);
