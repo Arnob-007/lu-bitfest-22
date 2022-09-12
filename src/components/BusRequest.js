@@ -24,10 +24,7 @@ const BusRequest = () => {
 
 	return (
 		<div>
-			<div className='flex justify-between items-center px-6 py-1 header fixed w-6/12 h-[60px] top-0 z-50 bg-white'>
-				<h1 className='font-bold text-primary mb-0'>PickMe</h1>
-			</div>
-			<div className='py-6 mx-16 mt-[70px] flex flex-col gap-5'>
+			<div className='py-6 mx-12  flex flex-col gap-5'>
 				<Request key='incoming' type='incoming' stoppages={stoppages} />
 				<Request key='outgoing' type='outgoing' stoppages={stoppages} />
 			</div>
