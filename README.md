@@ -87,10 +87,10 @@ demand for transit for the maximum number of consumers.
                 - [ ] [Class Routine](https://docs.google.com/spreadsheets/d/1kGY1XLjjdDOeFdTLzxgmQYZtLyKaBOshsJ_6pq0TrwU/edit#gid=712672084)
                 - [ ] [Exam Routine](https://docs.google.com/spreadsheets/d/1_E9bvZpGL41k3m40PBvWd9l3NCgR0RQn/edit#gid=329530890)
             - [ ] Calculate the demand in a specific route & timeslot based on the schedules
-        - [ ] Get an optimal suggestion of the following **[Mandatory feature | 20 points]**
-            - [ ] Estimated number of passengers (ie: students, teachers, staff) in a specific route & timeslot
-            - [ ] Which buses to allocated in a specific route & timeslot
-            - [ ] How many extra buses are required (If applicable)
+        - [x] Get an optimal suggestion of the following **[Mandatory feature | 20 points]**
+            - [x] Estimated number of passengers (ie: students, teachers, staff) in a specific route & timeslot
+            - [X] Which buses to allocated in a specific route & timeslot
+            - [x] How many extra buses are required (If applicable)
 
 2. **As a Consumer (ie: student, teacher, staff) ability to -**
     - [x] Open an account with the following information **[Mandatory feature | 5 points]**
@@ -124,9 +124,9 @@ demand for transit for the maximum number of consumers.
             - [ ] [Class Routine](https://docs.google.com/spreadsheets/d/1kGY1XLjjdDOeFdTLzxgmQYZtLyKaBOshsJ_6pq0TrwU/edit#gid=712672084)
             - [ ] [Exam Routine](https://docs.google.com/spreadsheets/d/1_E9bvZpGL41k3m40PBvWd9l3NCgR0RQn/edit#gid=329530890)
     - [ ] Ability to view the location of a bus with estimated arrival time **[Nice to have | 15 points]**
-    - [ ] View information about the transport **[Mandatory feature | 5 points]**
-        - [ ] Which buses are allocated in a specific route & timeslot
-        - [ ] Codename or sequence of the buses
+    - [x] View information about the transport **[Mandatory feature | 5 points]**
+        - [x] Which buses are allocated in a specific route & timeslot
+        - [x] Codename or sequence of the buses
 
 3. Prepare a dummy dataset with the following requirements **[Mandatory feature | 7 points]**
     - [x] 4 transport routes
