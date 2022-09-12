@@ -6,6 +6,7 @@ import {
 	TileLayer,
 	useMapEvents,
 	Polyline,
+	Tooltip,
 } from "react-leaflet";
 import "./map.css";
 import "leaflet/dist/leaflet.css";
@@ -141,7 +142,7 @@ const Map = () => {
 
 			{pageState.state === EDITING_BUS && buses?.length > 0 && (
 				<Polyline
-					pathOptions={{ color: "lime" }}
+					pathOptions={{ color: "#E66E42" }}
 					positions={buses
 						.find((bus) => bus.id === pageState.stateData.bus_id)
 						?.route.map(
@@ -153,6 +154,7 @@ const Map = () => {
 
 			{stoppages.map((stoppage) => (
 				<Marker position={stoppage.position} icon={markerIcon}>
+					<Tooltip>{stoppage?.name}</Tooltip>
 					<Popup>
 						<div className='px-2 py-4 min-w-[200px]'>
 							<Form

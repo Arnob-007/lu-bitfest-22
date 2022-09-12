@@ -1,27 +1,41 @@
 import { CarTwoTone, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, message, Select, TimePicker } from "antd";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useStateValue } from "../state/StateProvider";
 
 const BusRequest = () => {
-	console.log(moment().hour());
+	const [stoppages, setStoppages] = useState([]);
+
+	useEffect(() => {
+		const fetchStoppages = async () => {
+			const querySnapshot = await getDocs(collection(db, "stoppages"));
+			const temp = [];
+			querySnapshot.forEach((doc) => {
+				temp.push(doc.data());
+			});
+			setStoppages(temp);
+		};
+
+		fetchStoppages();
+	}, []);
+
 	return (
 		<div>
 			<div className='flex justify-between items-center px-6 py-1 header fixed w-6/12 h-[60px] top-0 z-50 bg-white'>
 				<h1 className='font-bold text-primary mb-0'>PickMe</h1>
 			</div>
 			<div className='py-6 mx-16 mt-[70px] flex flex-col gap-5'>
-				<Request key='incoming' type='incoming' />
-				<Request key='outgoing' type='outgoing' />
+				<Request key='incoming' type='incoming' stoppages={stoppages} />
+				<Request key='outgoing' type='outgoing' stoppages={stoppages} />
 			</div>
 		</div>
 	);
 };
 
-const Request = ({ type }) => {
+const Request = ({ type, stoppages }) => {
 	const [loading, setLoading] = useState(false);
 	const [{ user }] = useStateValue();
 	const [form] = Form.useForm();
@@ -89,14 +103,21 @@ const Request = ({ type }) => {
 				<Form.Item
 					name='stoppage'
 					label='Pick up point'
-					initialValue='Stoppage 1'
 					rules={[
 						{ required: true, message: "Please select your pick up point" },
 					]}
 				>
-					<Select className='w-[100%]' type='text' placeholder='Stoppage'>
-						<Select.Option value='Stoppage 1'>Stoppage 1</Select.Option>
-						<Select.Option value='Stoppage 2'>Stoppage 2</Select.Option>
+					<Select
+						onChange={(e) => console.log(e)}
+						className='w-[100%]'
+						type='text'
+						placeholder='Stoppage'
+					>
+						{stoppages.map((s) => (
+							<Select.Option key={s?.id} value={s?.id}>
+								{s.name}
+							</Select.Option>
+						))}
 					</Select>
 				</Form.Item>
 				<div className='flex mt-2 ml-auto gap-2'>

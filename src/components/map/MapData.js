@@ -1,11 +1,20 @@
-import { Button } from "antd";
+import {
+	ArrowRightOutlined,
+	EditOutlined,
+	EditTwoTone,
+	PlusCircleOutlined,
+} from "@ant-design/icons";
+import { Button, Divider, Form, message, Modal, Tag } from "antd";
 import { doc, setDoc } from "firebase/firestore";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { db } from "../../firebase";
 import { mapPageContext } from "../../pages/Leaflet";
 import { useStateValue } from "../../state/StateProvider";
 import Spinner from "../../utils/Spinner";
+import AddBus from "./AddBus";
 import {
+	ADDING_NEW_STOPPAGE,
+	EDITING_BUS,
 	LOADING,
 	SET_ADDING_NEW_STOPPAGE,
 	SET_EDITING_BUS,
@@ -13,6 +22,7 @@ import {
 } from "./constants";
 
 const MapData = () => {
+	const [showModal, setShowModal] = useState(false);
 	const [{ buses, stoppages, map: mapData }, dispatch] = useStateValue();
 	const [pageState, pageDispatch] = useContext(mapPageContext);
 
@@ -42,6 +52,14 @@ const MapData = () => {
 	};
 
 	const handleAddNewStoppage = () => {
+		message.info({
+			content: "Click anywhere in the map to add a stoppage",
+			style: {
+				position: "absolute",
+				top: 0,
+				right: 150,
+			},
+		});
 		pageDispatch({
 			type: SET_ADDING_NEW_STOPPAGE,
 			payload: true,
@@ -53,12 +71,11 @@ const MapData = () => {
 			type: SET_LOADING,
 			payload: true,
 		});
-		const bus = {
-			id: new Date().getTime(),
-			route: [],
-			color: "#369",
-		};
-		await setDoc(doc(db, "buses", bus.id.toString()), { ...bus });
+		setShowModal(true);
+	};
+
+	const handleClose = () => {
+		setShowModal(false);
 		pageDispatch({
 			type: SET_LOADING,
 			payload: false,
@@ -66,7 +83,7 @@ const MapData = () => {
 	};
 
 	return (
-		<div className='w-full min-h-full flex flex-col relative'>
+		<div className='w-full min-h-full flex flex-col'>
 			{pageState.state === LOADING && (
 				<div
 					className='absolute w-full h-full z-10'
@@ -77,40 +94,73 @@ const MapData = () => {
 			)}
 			{buses &&
 				buses.map((bus) => (
-					<div className='mx-8 my-4 px-4 py-2 rounded-md pl-8 shadow-lg'>
-						<div className='grid grid-cols-6'>
-							<div className='col-start-1 col-span-3 self-center text-xl'>
-								Bus no. {bus.id}
-							</div>
-							<div className='col-start-6 flex flex-col gap-y-2'>
-								<Button onClick={() => handleEdit(bus.id)}> Edit </Button>
-								<Button onClick={() => save(bus.id)} type='primary'>
-									{" "}
-									Save{" "}
-								</Button>
-							</div>
+					<div
+						onClick={() => handleEdit(bus.id)}
+						className={`${
+							pageState.state === EDITING_BUS &&
+							pageState.stateData.bus_id === bus.id &&
+							"border-solid border-primary border-b-[10px] border-y-0 border-x-0 "
+						} mx-8 my-4 px-4 py-2 rounded-md pl-8 shadow-lg cursor-pointer`}
+					>
+						<div className='flex justify-between items-center'>
+							<h2 className='col-start-1 col-span-3 self-center text-xl text-primary font-bold'>
+								{bus.name || "Bus name"}
+							</h2>
+							<div className='text-xs'>#{bus.id}</div>
 						</div>
-
-						<div>
-							<span className='text-xl'>Stoppages:</span>
-							<ul className='p-4 px-8 row-start-2 col-start-1 col-span-6'>
-								{bus.route.map((stoppage_id) => (
-									<li>{stoppages.find((st) => st.id === stoppage_id)?.name}</li>
-								))}
-							</ul>
+						<Divider className='mt-0' />
+						<div className='flex justify-between'>
+							<div>
+								<span className='text-[18px]'>Route </span>
+								<div className='py-2'>
+									{bus.route.map((stoppage_id, _i) => (
+										<>
+											<Tag>
+												{stoppages.find((st) => st.id === stoppage_id)?.name}
+											</Tag>
+											{_i !== bus?.route.length - 1 && (
+												<ArrowRightOutlined className='mr-2' />
+											)}
+										</>
+									))}
+								</div>
+							</div>
+							{pageState.state === EDITING_BUS &&
+								pageState.stateData.bus_id === bus.id && (
+									<div className='col-start-6 flex flex-col gap-y-2'>
+										<Button onClick={() => save(bus.id)} type='primary'>
+											{" "}
+											Update{" "}
+										</Button>
+									</div>
+								)}
 						</div>
 					</div>
 				))}
-			<div className='absolute bottom-0 right-0 m-8 flex gap-x-4'>
+			<div className='m-8 flex gap-x-4'>
 				<Button type='primary' size='large' onClick={handleAddNewBus}>
 					{" "}
 					Add New Bus{" "}
 				</Button>
-				<Button type='primary' size='large' onClick={handleAddNewStoppage}>
+				<Button
+					className='absolute bottom-8 right-8 z-[1000] rounded-full'
+					type='primary'
+					size='large'
+					onClick={handleAddNewStoppage}
+				>
 					{" "}
-					Add new stoppage{" "}
+					<PlusCircleOutlined /> Add new stoppage{" "}
 				</Button>
 			</div>
+			<Modal
+				width={450}
+				open={showModal}
+				footer={null}
+				title='Add new bus'
+				onCancel={handleClose}
+			>
+				<AddBus handleClose={handleClose} />
+			</Modal>
 		</div>
 	);
 };

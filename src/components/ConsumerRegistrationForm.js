@@ -1,13 +1,27 @@
 import { Button, Form, Input, message, Select } from "antd";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 
 const ConsumerRegistrationForm = () => {
 	const [loading, setLoading] = useState(false);
 	const [codeSent, setCodeSent] = useState(false);
+	const [stoppages, setStoppages] = useState([]);
 	const [form] = Form.useForm();
+
+	useEffect(() => {
+		const fetchStoppages = async () => {
+			const querySnapshot = await getDocs(collection(db, "stoppages"));
+			const temp = [];
+			querySnapshot.forEach((doc) => {
+				temp.push(doc.data());
+			});
+			setStoppages(temp);
+		};
+
+		fetchStoppages();
+	}, []);
 
 	useEffect(() => {
 		window.recaptchaVerifier = new RecaptchaVerifier(
@@ -160,8 +174,11 @@ const ConsumerRegistrationForm = () => {
 					</Form.Item>
 					<Form.Item name='stoppage'>
 						<Select className='w-[100%]' type='text' placeholder='Stoppage'>
-							<Select.Option value='stoppage 1'>Stoppage 1</Select.Option>
-							<Select.Option value='stoppage 2'>Stoppage 2</Select.Option>
+							{stoppages.map((s) => (
+								<Select.Option key={s?.id} value={s?.id}>
+									{s?.name}
+								</Select.Option>
+							))}
 						</Select>
 					</Form.Item>
 					<Button
